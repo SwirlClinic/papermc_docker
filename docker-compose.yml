@@ -1,0 +1,17 @@
+---
+services:
+  minecraft:
+    image: 58414e54e3cf
+    container_name: minecraft
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 25565:25565
+      - 19132:19132/udp
+    restart: unless-stopped
+    environment:
+      - TZ=America/Phoenix
+      - MC_RAM=3G
+    stdin_open: true
+    tty: true
+...
