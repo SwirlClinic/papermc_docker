@@ -1,7 +1,7 @@
 ---
 services:
   minecraft:
-    image: 58414e54e3cf
+    image: ghcr.io/swirlclinic/papermc_docker:master
     container_name: minecraft
     volumes:
       - ./data:/app/data

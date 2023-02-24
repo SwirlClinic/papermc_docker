@@ -19,7 +19,7 @@ then
   # Download new server jar
   wget ${URL} -O ${JAR_NAME}
 
-  wget https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/spigot/target/Geyser-Spigot.jar -O ${HOMEDIR}/plugins/Geyser-Spigot.jar
+  wget https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/spigot/build/libs/Geyser-Spigot.jar -O ${HOMEDIR}/plugins/Geyser-Spigot.jar
   wget https://ci.opencollab.dev/job/GeyserMC/job/Floodgate/job/master/lastSuccessfulBuild/artifact/spigot/build/libs/floodgate-spigot.jar -O ${HOMEDIR}/plugins/floodgate-spigot.jar
 fi
 
