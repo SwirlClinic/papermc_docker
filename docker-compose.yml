@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     environment:
       - TZ=America/Phoenix
-      - MC_RAM=3G
+      - MC_RAM=4G
     stdin_open: true
     tty: true
 ...
