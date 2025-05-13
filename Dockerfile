@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 
 ENV APP_DIR /app
 ENV HOMEDIR ${APP_DIR}/data
@@ -19,7 +19,7 @@ RUN set -x \
     && chmod +x ${MISC_DIR}/entry.sh
 COPY eula.txt ${MISC_DIR}
 
-RUN useradd -ms /bin/bash paperman -u 1000
+RUN useradd -ms /bin/bash paperman -u 1337
 RUN chown -R paperman ${APP_DIR}
 RUN chmod 755 ${APP_DIR}
 USER paperman
@@ -28,5 +28,6 @@ WORKDIR ${HOMEDIR}
 
 EXPOSE 25565/tcp
 EXPOSE 25565/udp
+EXPOSE 19132/udp
 
 ENTRYPOINT bash ${MISC_DIR}/entry.sh

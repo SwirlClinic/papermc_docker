@@ -5,8 +5,20 @@ cd ${HOMEDIR}
 #copypasta https://github.com/Phyremaster/papermc-docker/blob/master/papermc.sh
 
 # Set variables
-URL=https://papermc.io/api/v2/projects/paper
-version=$(wget -qO - $URL | jq -r '.versions[-1]')
+URL=https://api.papermc.io/v2/projects/paper
+
+# Check if MC_VERSION is defined, otherwise use latest version
+if [ ! -z "${MC_VERSION}" ]; then
+    version=${MC_VERSION}
+    # Verify the version exists
+    if ! wget -qO - $URL | jq -e ".versions[] | select(. == \"${version}\")" > /dev/null; then
+        echo "Error: Minecraft version ${MC_VERSION} is not available for Paper"
+        exit 1
+    fi
+else
+    version=$(wget -qO - $URL | jq -r '.versions[-1]')
+fi
+
 URL=${URL}/versions/${version}
 PAPER_BUILD=$(wget -qO - $URL | jq '.builds[-1]')
 JAR_NAME=paper-${version}-${PAPER_BUILD}.jar
@@ -19,8 +31,9 @@ then
   # Download new server jar
   wget ${URL} -O ${JAR_NAME}
 
-  wget https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/spigot/build/libs/Geyser-Spigot.jar -O ${HOMEDIR}/plugins/Geyser-Spigot.jar
-  wget https://ci.opencollab.dev/job/GeyserMC/job/Floodgate/job/master/lastSuccessfulBuild/artifact/spigot/build/libs/floodgate-spigot.jar -O ${HOMEDIR}/plugins/floodgate-spigot.jar
+  # Download latest Geyser and Floodgate
+  wget https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot -O ${HOMEDIR}/plugins/Geyser-Spigot.jar
+  wget https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot -O ${HOMEDIR}/plugins/floodgate-spigot.jar
 fi
 
 # If this is the first run, accept the EULA

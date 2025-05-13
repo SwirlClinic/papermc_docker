@@ -1,0 +1,19 @@
+---
+services:
+  minecraft:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: minecraft
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 25565:25565
+      - 19132:19132/udp
+    restart: unless-stopped
+    environment:
+      - TZ=America/Phoenix
+      - MC_RAM=4G
+    stdin_open: true
+    tty: true
+...
